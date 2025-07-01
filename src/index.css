@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap') layer(lib);
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&') layer(lib);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+:root {
+    font-family: 'Roboto', serif;
+    font-optical-sizing: auto;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: 'wdth' 100;
+    color-scheme: light;
+    background: var(--page-background) fixed;
+    color: var(--color-text);
+
+    --color-main: rgb(100, 150, 255);
+    --color-text: #333333;
+
+    --page-background: linear-gradient(145deg, #f0f4f8, white);
+    --header-background: #ffffff;
+    --post-background: #f7f9fc;
+
+    --color-border: #dcdcdc;
+    --color-loader-background: rgba(200, 200, 200, 0.6);
+
+    --color-nav-text: #2a4d84;
+    --color-nav-background-hover: #e1ecf4;
+
+    --color-login-text: #4f8ef7;
+    --color-login-background-hover: #e1f1ff;
+    --color-signup-background-hover: #b8c7f1;
+
+    --color-logout-text: #6c757d;
+    --color-logout-background-hover: #f0f0f0;
+}
+
+:root.dark {
+    color-scheme: dark;
+
+    --color-main: rgb(88, 120, 224);
+    --color-text: #fdfdfd;
+
+    --page-background: rgb(50, 50, 50);
+    --header-background: rgb(82, 82, 82);
+    --post-background: rgb(80, 80, 80);
+
+    --color-border: #8f8f8f;
+    --color-loader-background: rgba(187, 187, 187, 0.6);
+
+    --color-nav-text: rgb(219, 225, 255);
+    --color-nav-background-hover: rgb(105, 108, 126);
+
+    --color-login-text: rgb(214, 219, 255);
+    --color-login-background-hover: rgb(103, 107, 132);
+    --color-signup-background-hover: rgb(187, 193, 236);
+
+    --color-logout-text: rgb(215, 215, 215);
+    --color-logout-background-hover: rgb(129, 129, 129);
+}
+
+input,
+textarea,
+button {
+    border-style: none;
+    background-color: unset;
+}
+
+a {
+    text-decoration: none;
+}
+
+ol,
+ul {
+    list-style-type: none;
+}
+
+textarea {
+    resize: none;
+}
+
+textarea,
+input {
+    padding: 0.2rem 0.4rem;
+    border: 1px solid var(--color-border);
+}
+
+:is(input, textarea):focus {
+    outline: 2px dotted var(--color-nav-text);
+    outline-offset: -3px;
+}
+
+#root {
+    position: relative;
+    min-height: 100vh;
+}
+
+.err {
+    color: crimson;
+}
+
+.disabled,
+:disabled {
+    pointer-events: none;
+    opacity: 0.56;
+}
+
+.opaque {
+    opacity: 0.56;
+}
+
+.no-pointer-events {
+    pointer-events: none;
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-variation-settings: 'wght' 700, 'FILL' 1;
+    font-size: 1.5em;
+    user-select: none;
+}
+

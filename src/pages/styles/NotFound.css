@@ -1,0 +1,10 @@
+.not-found {
+    font-size: 1.6em;
+    margin-top: 3em;
+    line-height: 1.8;
+    text-align: center;
+
+    & > .content {
+        color: var(--color-main);
+    }
+}
