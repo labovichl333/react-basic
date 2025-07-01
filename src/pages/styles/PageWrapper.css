@@ -1,0 +1,25 @@
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 0;
+    min-width: 370px;
+
+    & > .page-content-wrapper {
+        width: min(100%, 1500px);
+        align-self: center;
+        flex-grow: 1;
+        display: flex;
+        position: relative;
+        z-index: 1;
+
+        & > .page-main {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            width: 70%;
+            margin: 0 auto;
+        }
+    }
+}

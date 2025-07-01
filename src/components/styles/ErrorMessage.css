@@ -1,0 +1,11 @@
+.error-msg {
+    font-size: 1.6em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2em;
+
+    .content {
+        color: var(--color-main);
+    }
+}

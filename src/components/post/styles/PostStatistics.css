@@ -1,0 +1,20 @@
+.post-statistics {
+    display: flex;
+    gap: 2.2em;
+    font-size: 1.12em;
+    padding-inline: 0.5em;
+
+    & > .post-statistic {
+        display: flex;
+        align-items: center;
+        gap: 0.4em;
+
+        &:first-child {
+            margin-right: auto;
+        }
+
+        & > .statistic-value {
+            font-weight: 600;
+        }
+    }
+}
