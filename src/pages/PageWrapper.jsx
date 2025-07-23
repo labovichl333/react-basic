@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import ErrorBoundary from "../components/ErrorBoundary.jsx";
 import ErrorMessage from "../components/ErrorMessage.jsx";

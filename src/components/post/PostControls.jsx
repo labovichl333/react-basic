@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {AppContext} from "../../App.jsx";
 import postService from "../../services/postService.js";
 import toast from "react-hot-toast";
@@ -8,7 +8,7 @@ const PostControls = ({
                           values,
                           isEdit,
                           post,
-                          applyBtnRef,
+                          isApplyBtnDisabled,
                           setIsDeleted,
                           setIsLoading,
                           setFormValues,
@@ -67,7 +67,7 @@ const PostControls = ({
                     {isEdit && (
                         <>
                             <button
-                                ref={applyBtnRef}
+                                disabled={isApplyBtnDisabled}
                                 type="submit"
                                 form={`post-form-${post.id}`}
                             >

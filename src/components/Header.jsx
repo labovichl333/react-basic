@@ -3,9 +3,10 @@ import {Link, NavLink, useNavigate} from 'react-router-dom';
 
 import './styles/Header.css';
 import {AppContext} from "../App.jsx";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 const Header = () => {
-    const {user, setUser, theme, setTheme} = useContext(AppContext);
+    const {user, setUser} = useContext(AppContext);
     const navigate = useNavigate();
 
     const navRef = useRef();
@@ -14,10 +15,6 @@ const Header = () => {
         localStorage.removeItem('loggedInUser');
         setUser();
         navigate('/login');
-    }
-
-    function handleThemeChange() {
-        setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
     }
 
     return (
@@ -54,33 +51,7 @@ const Header = () => {
             </nav>
 
             <div className="right-content-wrapper">
-                <section className="theme-switcher">
-                    {theme === 'dark' && (
-                        <button
-                            type="button"
-                            className="theme light"
-                            onClick={handleThemeChange}
-                        >
-                            <span>Light</span>
-                            <span className="material-symbols-outlined theme-icon">
-                light_mode
-              </span>
-                        </button>
-                    )}
-
-                    {theme === 'light' && (
-                        <button
-                            type="button"
-                            className="theme dark"
-                            onClick={handleThemeChange}
-                        >
-                            <span>Dark</span>
-                            <span className="material-symbols-outlined theme-icon">
-                dark_mode
-              </span>
-                        </button>
-                    )}
-                </section>
+                <ThemeToggle/>
 
                 {user ? (
                     <section className="user-wrapper">

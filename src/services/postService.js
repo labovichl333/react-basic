@@ -5,15 +5,8 @@ const POSTS_URL = 'http://localhost:3000/posts';
 
 const postService = {
 
-    async getPosts(searchParams, page, limit, setResponse, isPageNumberReset) {
-        if (isPageNumberReset) {
-            page = 1
-            setResponse((prev) => ({
-                ...prev,
-                page: page,
-                data: [],
-            }))
-        }
+    async getPosts(searchParams, page, limit) {
+        const result = {};
 
         const params = {};
 
@@ -33,44 +26,25 @@ const postService = {
 
         const urlObj = new URL(POSTS_URL);
 
-        Object.entries(params)
-            .forEach(([key, value]) => value && urlObj.searchParams.append(key, value));
-
-        setResponse((prev) => ({
-            ...prev,
-            isInProgress: true,
-        }));
+        Object.entries(params).forEach(([key, value]) => {
+            if (value) urlObj.searchParams.append(key, value);
+        });
 
         try {
             const response = await fetch(urlObj);
             const data = await response.json();
-            setResponse((prev) => ({
-                ...prev,
-                data: [
-                    ...(prev.data || []),
-                    ...data.data.filter(item => !prev.data.some(existingItem => existingItem.id === item.id))
-                ],
-                page: prev.page + 1,
-                lastPage: data.last,
-                isInProgress: false,
-            }));
+
+            result.data = data.data;
+            result.lastPage = data.last;
         } catch (err) {
-            setResponse((prev) => ({
-                ...prev,
-                error: 'Ошибка при загрузке данных',
-                isInProgress: false,
-            }));
+            result.error = 'Error loading data';
         }
-
-
+        return result;
     },
 
+    async getFavoritePosts(ids) {
 
-    async getFavoritePosts(ids, setResponse) {
-        setResponse((prev) => ({
-            ...prev,
-            isInProgress: true,
-        }));
+        const response = {}
 
         try {
             const posts = [];
@@ -82,7 +56,7 @@ const postService = {
                 const response = await fetch(url);
 
                 if (!response.ok) {
-                    throw new Error(`Ошибка при загрузке поста с ID: ${id}`);
+                    throw new Error(`Error loading post with ID: ${id}`);
                 }
 
                 const data = await response.json();
@@ -90,19 +64,12 @@ const postService = {
                 posts.push(data);
             }
 
-            setResponse((prev) => ({
-                ...prev,
-                data: posts,
-                isInProgress: false,
-            }));
+            response.data = posts
 
         } catch (err) {
-            setResponse((prev) => ({
-                ...prev,
-                error: 'Ошибка при загрузке избранных постов',
-                isInProgress: false,
-            }));
+            response.error = 'Error loading featured posts';
         }
+        return response;
     },
 
 

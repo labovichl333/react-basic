@@ -2,6 +2,7 @@ import './styles/SearchSort.css';
 import {useSearchParams} from "react-router-dom";
 import {useState} from "react";
 import useDebounce from "../hooks/useDebounce.js";
+import clsx from "clsx";
 
 const SearchSort = () => {
 
@@ -16,7 +17,8 @@ const SearchSort = () => {
 
         const sortField = e.currentTarget.dataset.sort;
 
-        let sort = sortField, order = 'asc';
+        let sort = sortField;
+        let order = 'asc';
 
         if (sortField === searchParams.get('sort')) {
             if (searchParams.get('order') === 'asc') {
@@ -66,9 +68,9 @@ const SearchSort = () => {
                 <div className="sort-fields">
                     <div
                         data-sort="views"
-                        className={
-                            'sort-field' + (searchParams.get('sort') === 'views' ? ' active' : '')
-                        }
+                        className={clsx('sort-field', {
+                            active: searchParams.get('sort') === 'views'
+                        })}
                         onClick={sortChangeHandler}
                     >
 
@@ -93,9 +95,10 @@ const SearchSort = () => {
                     </div>
                     <div
                         data-sort="likes"
-                        className={
-                            'sort-field' + (searchParams.get('sort') === 'likes' ? ' active' : '')
-                        }
+                        className={clsx('sort-field', {
+                            active: searchParams.get('sort') === 'likes'
+                        })}
+
                         onClick={sortChangeHandler}
                     >
                         <span className="material-symbols-outlined">thumb_up</span>

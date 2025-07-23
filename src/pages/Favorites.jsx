@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import postService from "../services/postService.js";
 import Spinner from "../components/Spinner.jsx";
 import Post from "../components/post/Post.jsx";
@@ -22,6 +22,10 @@ const Favorites = () => {
 
     const [pageNumbers, setPageNumbers] = useState(calcPageNumbers());
 
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [response, setResponse] = useState({});
+
     function calcPageNumbers() {
         let numbers = [];
         for (let i = 1; i <= totalPages; i++) {
@@ -31,27 +35,26 @@ const Favorites = () => {
     }
 
     function getPostsForPage() {
-
         const startIndex = (page - 1) * POSTS_PER_PAGE;
         const endIndex = page * POSTS_PER_PAGE;
-
 
         return favorites.slice(startIndex, endIndex);
     }
 
-    const [response, setResponse] = useState({
-        data: null,
-        error: null,
-        isInProgress: false,
-    });
-
     useEffect(() => {
-        if (favorites?.length >= 0) {
-            if (totalPages < page) {
-                setPage(totalPages)
+        async function fetchData() {
+            if (favorites?.length >= 0) {
+                if (totalPages < page) {
+                    setPage(totalPages);
+                }
+                setIsLoading(true);
+                const data = await postService.getFavoritePosts(getPostsForPage());
+                setIsLoading(false);
+                setResponse(data);
             }
-            postService.getFavoritePosts(getPostsForPage(), setResponse);
         }
+
+        fetchData();
 
     }, [page, favorites]);
 
@@ -118,7 +121,7 @@ const Favorites = () => {
 
     return (
         <section className="favorites-page">
-            {response.isInProgress && (
+            {isLoading && (
                 <Spinner/>
             )}
 

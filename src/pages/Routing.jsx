@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from 'react';
+import {lazy, Suspense} from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Spinner from "../components/Spinner.jsx";
 import ErrorBoundary from "../components/ErrorBoundary.jsx";

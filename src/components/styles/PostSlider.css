@@ -1,0 +1,102 @@
+.slider {
+    & > .btn {
+        cursor: pointer;
+        display: block;
+        border-radius: 50%;
+
+        padding: 0.3em;
+        border: 1px solid var(--color-border);
+        border-radius: 50%;
+    }
+
+    & > .post-slider {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        & > .slide {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: translateX(0);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        & > .slide.active {
+            opacity: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        & > .slide-in-right {
+            animation: slideInRight 0.5s forwards;
+        }
+
+        & > .slide-out-right {
+            animation: slideOutRight 0.5s forwards;
+        }
+
+        & > .slide-in-left {
+            animation: slideInLeft 0.5s forwards;
+        }
+
+        & > .slide-out-left {
+            animation: slideOutLeft 0.5s forwards;
+        }
+    }
+}
+
+.single-post {
+    overflow: hidden;
+
+    & > .btn {
+        display: none;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}

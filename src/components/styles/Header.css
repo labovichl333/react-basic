@@ -51,29 +51,6 @@
         align-items: center;
         gap: 2em;
 
-
-        & > .theme-switcher {
-            & > .theme {
-                padding: 0.1em 0.2em;
-                margin: 0.5em;
-                border-radius: 0.25em;
-                color: var(--header-background);
-                background-color: var(--color-text);
-                display: flex;
-                align-items: center;
-                gap: 0.22em;
-
-                & > .theme-icon {
-                    font-size: 1.1em;
-                }
-
-                &:hover {
-                    cursor: pointer;
-                    opacity: 0.6;
-                }
-            }
-        }
-
         & > .user-wrapper {
             display: flex;
             align-items: center;
@@ -81,7 +58,6 @@
 
 
             & > .logout {
-                background-color: var(--color-logout-background);
                 color: var(--color-logout-text);
                 border: 1px solid;
                 display: flex;

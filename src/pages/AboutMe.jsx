@@ -1,105 +1,32 @@
-import React, {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import postService from "../services/postService.js";
 import Spinner from "../components/Spinner.jsx";
-import Post from "../components/post/Post.jsx";
-
-import './styles/AboutMe.css'
+import './styles/AboutMe.css';
 import toast from "react-hot-toast";
-
-const INTERVAL = 2500;
+import PostSlider from "../components/PostSlider.jsx";
 
 const AboutMe = () => {
-    const [response, setResponse] = useState({
-        data: null,
-        error: null,
-        isInProgress: false,
-    });
-
+    const [isLoading, setIsLoading] = useState(false);
     const [postList, setPostList] = useState([]);
 
-    const nextBtnRef = useRef();
-    const interval = useRef();
-
     useEffect(() => {
-        postService.getPosts({sort: 'views', order: 'desc'}, 1, 3, setResponse, true);
+        const fetchPosts = async () => {
+            setIsLoading(true);
+            const response = await postService.getPosts({sort: 'views', order: 'desc'}, 1, 3);
+            setIsLoading(false);
 
-        return () => {
-            clearInterval(interval.current);
+            if (response.error) {
+                toast.error('error loading posts');
+            } else if (response.data) {
+                setPostList(response.data);
+            }
         };
+
+        fetchPosts();
     }, []);
-
-    useEffect(() => {
-        if (response.error) {
-            toast.error('error loading posts');
-        } else if (response.data) {
-            setPostList(response.data);
-        }
-        if (response.isInProgress) {
-            <Spinner/>;
-        }
-
-    }, [response]);
-
-    useEffect(() => {
-        if (postList.length > 1) {
-            interval.current = setInterval(intervalFunc, INTERVAL);
-        }
-    }, [postList]);
-
-    function intervalFunc() {
-        nextBtnRef.current.click();
-    }
-
-    function handleButtonClick(e) {
-        if (e.clientX && e.clientY) {
-            if (interval.current) {
-                clearInterval(interval.current);
-            }
-
-            interval.current = setInterval(intervalFunc, INTERVAL);
-        }
-
-        const btn = e.currentTarget;
-        const isNextBtn = btn.classList.contains('next');
-
-        const postList = btn.parentElement.querySelector('.post-list');
-        const posts = [...postList.children];
-
-        const activePost = postList.firstElementChild;
-        const targetPost = isNextBtn
-            ? activePost.nextElementSibling
-            : postList.lastElementChild;
-
-        if (isNextBtn) {
-            posts.forEach((post) => post.classList.add('move-left'));
-        } else {
-            postList.prepend(targetPost);
-            posts.forEach((post) => post.classList.add('move-right'));
-        }
-
-        targetPost.onanimationend = handleAnimationEnd;
-
-        function handleAnimationEnd() {
-            posts.forEach((post) => {
-                post.classList.remove('move-right');
-                post.classList.remove('move-left');
-            });
-
-            if (isNextBtn) {
-                postList.append(activePost);
-                postList.prepend(targetPost);
-            }
-
-            targetPost.onanimationend = null;
-        }
-    }
 
     return (
         <div className="about-page">
-            {response.isInProgress && (
-                <Spinner/>
-            )}
-
             <div className="about-wrapper">
                 <div className="title">About Me</div>
                 <div className="text">
@@ -114,39 +41,23 @@ const AboutMe = () => {
                 </div>
             </div>
 
+            {isLoading && <Spinner/>}
+
             {postList.length > 0 && (
                 <div className="about-top-posts">
                     <div className="title">
-                        {`Top ${postList.length} popular posts`}
+                        {postList.length === 1 && (
+                            `The most popular post`
+                        )}
+                        {postList.length > 1 && (
+                            `Top ${postList.length} popular posts`
+                        )}
                     </div>
-                    <div className={`content${postList.length > 1 ? ' slider' : ''}`}>
-                        <button
-                            type="button"
-                            className="material-symbols-outlined btn prev"
-                            onClick={handleButtonClick}
-                        >
-                            arrow_back_2
-                        </button>
-                        <ul className="post-list">
-                            {postList.map((post) => (
-                                <li key={post.id}>
-                                    <Post post={post}/>
-                                </li>
-                            ))}
-                        </ul>
-                        <button
-                            ref={nextBtnRef}
-                            type="button"
-                            className="material-symbols-outlined btn next"
-                            onClick={handleButtonClick}
-                        >
-                            play_arrow
-                        </button>
-                    </div>
+                    <PostSlider posts={postList}/>
                 </div>
             )}
         </div>
     );
-}
+};
 
 export default AboutMe;

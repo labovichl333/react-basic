@@ -1,4 +1,3 @@
-import React from 'react';
 import './styles/ErrorMessage.css'
 import {Link} from "react-router-dom";
 

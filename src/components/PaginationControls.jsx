@@ -1,5 +1,5 @@
-import React from 'react';
 import './styles/PaginationControls.css'
+import clsx from "clsx";
 
 const PaginationControls = ({page, pageNumbers, onPageChange}) => {
     return (
@@ -7,10 +7,9 @@ const PaginationControls = ({page, pageNumbers, onPageChange}) => {
             <section className="favorites-pagination">
                 <button
                     type="button"
-                    className={
-                        'page-num arrow fast' +
-                        (page === pageNumbers[0] ? ' disabled' : '')
-                    }
+                    className={clsx('page-num', 'arrow', 'fast', {
+                        disabled: page === pageNumbers[0],
+                    })}
                     data-page-num={pageNumbers[0]}
                     onClick={onPageChange}
                 >
@@ -19,9 +18,9 @@ const PaginationControls = ({page, pageNumbers, onPageChange}) => {
 
                 <button
                     type="button"
-                    className={
-                        'page-num arrow' + (page === pageNumbers[0] ? ' disabled' : '')
-                    }
+                    className={clsx('page-num', 'arrow', {
+                        disabled: page === pageNumbers[0],
+                    })}
                     data-page-num={page - 1}
                     onClick={onPageChange}
                 >
@@ -33,11 +32,12 @@ const PaginationControls = ({page, pageNumbers, onPageChange}) => {
                         type="button"
                         data-page-num={typeof val === 'number' ? val : null}
                         key={'pageNum_' + index}
-                        className={
-                            typeof val === 'number'
-                                ? 'page-num' + (page === val ? ' active' : '')
-                                : 'dots'
-                        }
+                        className={clsx(
+                            typeof val === 'number' ? 'page-num' : 'dots',
+                            {
+                                active: typeof val === 'number' && page === val,
+                            }
+                        )}
                         onClick={onPageChange}
                     >
                         {val}
@@ -46,10 +46,9 @@ const PaginationControls = ({page, pageNumbers, onPageChange}) => {
 
                 <button
                     type="button"
-                    className={
-                        'page-num arrow' +
-                        (page === pageNumbers.at(-1) ? ' disabled' : '')
-                    }
+                    className={clsx('page-num', 'arrow', {
+                        disabled: page === pageNumbers.at(-1),
+                    })}
                     data-page-num={page + 1}
                     onClick={onPageChange}
                 >
@@ -57,10 +56,9 @@ const PaginationControls = ({page, pageNumbers, onPageChange}) => {
                 </button>
                 <button
                     type="button"
-                    className={
-                        'page-num arrow fast' +
-                        (page === pageNumbers.at(-1) ? ' disabled' : '')
-                    }
+                    className={clsx('page-num', 'arrow', 'fast', {
+                        disabled: page === pageNumbers.at(-1),
+                    })}
                     data-page-num={pageNumbers.at(-1)}
                     onClick={onPageChange}
                 >

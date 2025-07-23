@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {AppContext} from "../../App.jsx";
 import validationService from "../../services/validationService.js";
 import toast from "react-hot-toast";
@@ -6,6 +6,7 @@ import postService from "../../services/postService.js";
 import userService from "../../services/userService.js";
 import PostControls from "./PostControls.jsx";
 import './styles/PostContent.css'
+import clsx from "clsx";
 
 const PostContent = ({post, setIsLoading, setIsDeleted}) => {
     const {user, favorites, setFavorites} = useContext(AppContext);
@@ -27,7 +28,7 @@ const PostContent = ({post, setIsLoading, setIsDeleted}) => {
 
     const postEditFormRef = useRef();
     const postTextRef = useRef();
-    const applyBtnRef = useRef();
+    const [isApplyBtnDisabled, setIsApplyBtnDisabled] = useState(true);
 
     useEffect(() => {
         if (isEdit) {
@@ -41,10 +42,7 @@ const PostContent = ({post, setIsLoading, setIsDeleted}) => {
     }, [formValues, isEdit]);
 
     function setBtnDisabled() {
-        if (applyBtnRef.current) {
-            applyBtnRef.current.disabled =
-                formValues.title === values.title && formValues.text === values.text;
-        }
+        setIsApplyBtnDisabled(formValues.title === values.title && formValues.text === values.text);
     }
 
     function setTextareaHeight() {
@@ -69,7 +67,7 @@ const PostContent = ({post, setIsLoading, setIsDeleted}) => {
     async function handleFormSubmit(e) {
         e.preventDefault();
 
-        if (applyBtnRef.current.disabled) return;
+        if (isApplyBtnDisabled) return;
 
         setIsLoading(true);
 
@@ -176,9 +174,9 @@ const PostContent = ({post, setIsLoading, setIsDeleted}) => {
                             onClick={handleFavoriteClick}
                         >
             <span
-                className={
-                    'material-symbols-outlined fav-icon' + (isFavorite ? ' active' : '')
-                }
+                className={clsx('material-symbols-outlined', 'fav-icon', {
+                    active: isFavorite,
+                })}
             >
               favorite
             </span>
@@ -191,7 +189,7 @@ const PostContent = ({post, setIsLoading, setIsDeleted}) => {
                 values={values}
                 isEdit={isEdit}
                 post={post}
-                applyBtnRef={applyBtnRef}
+                isApplyBtnDisabled={isApplyBtnDisabled}
                 setIsDeleted={setIsDeleted}
                 setIsLoading={setIsLoading}
                 setFormValues={setFormValues}

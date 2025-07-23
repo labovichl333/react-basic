@@ -95,9 +95,7 @@ const Login = ({isLogin}) => {
                                 maxLength="30"
                             />
                             {errors.email && (
-                                <>
-                                    <div className="err">{errors.email}</div>
-                                </>
+                                <div className="err">{errors.email}</div>
                             )}
                         </div>
                         <div className="login-field">

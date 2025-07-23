@@ -1,7 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import localStorageService from "../../services/localStorageService.js";
 import {AppContext} from "../../App.jsx";
 import './styles/PostStatistics.css'
+import clsx from "clsx";
 
 
 const PostStatistics = ({post}) => {
@@ -88,14 +89,17 @@ const PostStatistics = ({post}) => {
             </div>
 
             <div
-                className={
-                    'post-statistic rating likes' +
-                    (!user ? ' disabled' : !isLiked ? ' opaque' : '')
-                }
+                className={clsx(
+                    'post-statistic rating likes',
+                    {
+                        'disabled': !user,
+                        'opaque': user && !isLiked,
+                    }
+                )}
             >
                 <button
                     type="button"
-                    className={!user ? 'no-pointer-events' : ''}
+                    className={clsx({'no-pointer-events': !user})}
                     onClick={handleLikesChange}
                 >
                     <span className="material-symbols-outlined statistic-icon">thumb_up</span>
@@ -104,14 +108,17 @@ const PostStatistics = ({post}) => {
             </div>
 
             <div
-                className={
-                    'post-statistic rating dislikes' +
-                    (!user ? ' disabled' : !isDisliked ? ' opaque' : '')
-                }
+                className={clsx(
+                    'post-statistic rating dislikes',
+                    {
+                        'disabled': !user,
+                        'opaque': user && !isDisliked,
+                    }
+                )}
             >
                 <button
                     type="button"
-                    className={!user ? 'no-pointer-events' : ''}
+                    className={clsx({'no-pointer-events': !user})}
                     onClick={handleDislikesChange}
                 >
                     <span className="material-symbols-outlined statistic-icon">thumb_down</span>
