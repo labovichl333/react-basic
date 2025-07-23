@@ -1,0 +1,16 @@
+.favorites-page {
+    position: relative;
+    flex-grow: 1;
+    padding-inline: 5em;
+
+    & > .post-list > li > .post > .post-controls {
+        display: none;
+    }
+
+    & > .favorites-title {
+        text-align: center;
+        font-size: 1.4em;
+        margin-block: 0.6em;
+        font-weight: 500;
+    }
+}

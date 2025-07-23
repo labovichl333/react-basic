@@ -1,0 +1,114 @@
+.page-header {
+    background: var(--header-background);
+    position: sticky;
+    z-index: 100;
+    top: 0;
+    font-weight: 550;
+    font-size: 1.6em;
+    padding-inline: 2.5em;
+    display: flex;
+    gap: 2em;
+    align-items: center;
+    white-space: nowrap;
+    box-shadow: 0 0 0.2em;
+
+    .nav-btn {
+        border-radius: 0.3em;
+        padding: 0.2em 0.6em;
+        cursor: pointer;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'wght' 300, 'FILL' 1;
+    }
+
+    & > .navigation {
+        & > ul {
+            display: flex;
+
+            & > li {
+                & > a {
+                    display: block;
+                    color: var(--color-nav-text);
+
+                    &:hover {
+                        background-color: var(--color-nav-background-hover);
+                    }
+
+                    &.active {
+                        text-decoration: underline 0.13em;
+                        text-underline-offset: 20px;
+
+                    }
+                }
+            }
+        }
+    }
+
+    & > .right-content-wrapper {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 2em;
+
+        & > .user-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+
+
+            & > .logout {
+                color: var(--color-logout-text);
+                border: 1px solid;
+                display: flex;
+                align-items: center;
+
+                & > .logout-icon {
+                    display: none;
+                }
+
+                &:hover {
+                    background-color: var(--color-logout-background-hover);
+                }
+            }
+        }
+
+        & > .login-wrapper {
+            display: flex;
+            gap: 0.5em;
+
+            & > a {
+                border: 1px solid var(--color-login-text);
+
+                &.login {
+                    color: var(--color-login-text);
+                    display: flex;
+                    align-items: center;
+
+                    & > .login-icon {
+                        display: none;
+                    }
+
+                    &:hover {
+                        background-color: var(--color-login-background-hover);
+                    }
+                }
+
+                &.signup {
+                    color: var(--header-background);
+                    background-color: var(--color-login-text);
+                    display: flex;
+                    align-items: center;
+
+                    & > .signup-icon {
+                        display: none;
+                    }
+
+                    &:hover {
+                        background-color: var(--color-signup-background-hover);
+                    }
+                }
+            }
+        }
+    }
+}
